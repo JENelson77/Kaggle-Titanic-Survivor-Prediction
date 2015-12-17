@@ -1,0 +1,49 @@
+### Recursive Partitioning Models
+#### Load necessary packages
+```{r }
+library(rpart)
+library(rattle)
+library(rpart.plot)
+library(RColorBrewer)
+```
+
+#### Build the decision tree
+
+```{r}
+rpart4 <- rpart(Survived ~ Sex+Pclass+smallfamily+notalone+Child+Age+Fare+title, data = train, method ="class")
+```
+
+#### Visualize the decision tree using rpart.plot
+
+```{r}
+fancyRpartPlot(rpart4)  
+```
+
+#### Make prediction using the test set
+
+```{r}
+my_prediction <- predict(rpart4, test, type = "class")
+```
+
+#### Create a data frame with two columns for submission to Kaggle: PassengerId & Survived. 
+
+```{r}
+my_solution <- data.frame(PassengerId = test$PassengerId, Survived = my_prediction)
+```
+
+#### Check that my_solution has 418 entries
+
+```{r}
+nrow(my_solution)
+```
+
+#### Write csv file for submission
+write.csv(my_solution, file = "rpart4.csv", row.names = FALSE)
+
+####RESULTS:  
+
+**rpart2: (Sex+Pclass+smallfamily+notalone+Child) accuracy = 0.79426 placing 1425/3938** 
+
+**rpart3: (Sex+Pclass+smallfamily+notalone+Child+Age+Fare) accuracy = 0.79904 placing 1118/3938** 
+
+**rpart4: (Sex+Pclass+smallfamily+notalone+Child+Age+Fare+title) adding title to model omits:Sex+smallfamily+notalone+Child, accuracy = 0.77990 no improvement**

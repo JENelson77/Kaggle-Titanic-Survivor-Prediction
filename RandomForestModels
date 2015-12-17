@@ -1,0 +1,53 @@
+
+### Random Forest Models
+#### Load randomForest package
+```{r }
+library(randomForest)
+```
+
+#### Set seed for reproducibility
+
+```{r}
+set.seed(123)
+```
+
+
+#### Apply the Random Forest Algorithm and check variable importance
+```{r}
+rf4 <- randomForest(Survived ~ (Sex+Pclass+smallfamily+notalone+Child), data = train, ntree = 1000, importance = TRUE)
+
+round(importance(rf4), 1)
+```
+
+
+#### Make a prediction using the test set
+
+```{r}
+my_prediction<- predict(rf4, newdata=test)
+```
+
+#### Create a data frame with two columns for submission to Kaggle: PassengerId & Survived. 
+```{r}
+my_solution <- data.frame(PassengerId = test$PassengerId, Survived = my_prediction)
+```
+
+
+#### Check that my_solution has 418 entries
+
+```{r}
+nrow(my_solution)
+```
+
+#### Write your solution to a csv file with the name my_solution.csv
+
+```{r}
+write.csv(my_solution, file = "rf1.csv", row.names = FALSE)
+```
+
+#### RESULTS:  
+
+__rf2: (Sex+Pclass+smallfamily+notalone+Child+Age+Fare) accuracy = 0.80383 placing 911/3942  (Best overall model)__
+
+**rf3: (Sex+Pclass+smallfamily+notalone+Child) accuracy = 0.79426 no improvement**
+
+**rf4: (Sex+Pclass+smallfamily+Age+Fare) accuracy = 0.79904 no improvement**

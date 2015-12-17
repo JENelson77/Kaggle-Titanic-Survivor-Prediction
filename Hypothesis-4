@@ -1,0 +1,83 @@
+#### *Hypothesis 4:* data visualization suggests that small families had increased odds of survival ##
+#### Create new categorical feature *smallfamily* from *familysize* >1 but <4 (ie between 2-4 people total)
+```{r}
+data$smallfamily[data$familysize >1 & data$familysize<=4] <-1
+data$smallfamily[data$familysize == 1 | data$familysize>4 ] <-0
+data$smallfamily <- factor(data$smallfamily)
+```
+
+#### Create feature for just 3rd Class to test as a surrogate for *Pclass*
+```{r}
+data$thirdClass[data$Pclass ==3 ] <-1
+data$thirdClass[data$Pclass ==1 | data$Pclass==2 ] <-0
+data$thirdClass <- factor(data$thirdClass)  
+```
+
+#### Visualize survival as a function of having a smallfamily or 3rd class cabin
+
+
+```{r results='hide'}
+trainset<-data%>% arrange(dataset)%>%slice(419:1309)
+head (trainset)
+glimpse(trainset)
+```
+
+
+
+```{r}
+hist_smallfamily <- ggplot(trainset, aes(x=smallfamily, fill=Survived))
+  hist_smallfamily + geom_bar() # defaults to stacking
+  hist_smallfamily + geom_bar(position= "fill") #proportions
+```
+
+
+
+#### Visualize *thirdClass*
+```{r}
+hist_thirdclass <- ggplot(trainset, aes(x=thirdClass, fill=Survived))
+  hist_thirdclass + geom_bar() # defaults to stacking
+  hist_thirdclass+ geom_bar(position= "fill") #proportions
+```
+  
+#### Impute value for *Age* based on logit model
+```{r}
+ageimp <- lm(Age~ Pclass+smallfamily+SibSp+title,  data= data)
+summary(ageimp)
+
+# assign imputed Age values for NAs in combined.df
+for(i in 1:nrow(data)) {
+  if(is.na(data[i, "Age"])) {
+    data[i, "Age"] <- predict(ageimp, newdata = data[i, ])  
+  }
+}
+```
+
+#### Impute missing fare value for passenger 1044 based on median cost of thirdclass single ticket
+```{r}
+data<-arrange(data, desc(thirdClass))
+  data<-arrange(data, SibSp)
+  data<-arrange(data, Parch)
+
+threemeanfare<-data[1:472, "Fare"]
+summary(threemeanfare)
+
+```
+```{r results='hide'}
+arrange(data, PassengerId)
+data[59,"Fare"]<-7.854
+summary(data$Fare)
+```
+
+
+#### Split data df into train and test datasets 
+```{r}
+data<-arrange(data, dataset)
+test<- data[1:418, ]
+class(test)
+train<-data[419:1309, ]
+train$Survived <- droplevels(train$Survived) 
+test$Survived <- droplevels(test$Survived) 
+str(test)
+str(train)
+```
+

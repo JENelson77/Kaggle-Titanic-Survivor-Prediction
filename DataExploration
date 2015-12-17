@@ -1,0 +1,86 @@
+
+### DATA CURATION  
+### Load Datasets and R Packages
+
+#### Load dplyr package for data transformation
+
+```{r}
+library(dplyr)
+```
+
+#### Load ggplot2 for data visualization
+
+```{r}
+library (ggplot2)
+```
+
+
+#### Load the training and test datasets
+
+```{r}
+train <- read.csv ("train.csv",  header= TRUE)
+  str(train)
+test<- read.csv ("test.csv",  header= TRUE)
+  str(test)
+```
+
+
+### Data Transformation and Verification
+
+#### Change the *Survived* variable from int to factor before combining
+
+```{r}
+train$Survived<- factor(train$Survived)
+```
+
+#### Create *Survived* dummy variable in test set before combining
+
+```{r}
+test<- mutate(test, Survived = "none")
+```
+
+#### Create sorting variable *dataset* before combining
+```{r}
+test <- mutate(test, dataset = "testset")
+train <- mutate(train, dataset = "trainset")
+```
+
+
+#### Combine training and test datasets for feature engineering
+
+```{r}
+titanic.combined <- rbind(test, train)
+str(titanic.combined)
+```
+#### Rename and create local data frame for simplicity
+
+```{r}
+data<- tbl_df (titanic.combined)
+```
+
+#### Factorize *Pclass, dataset and Survived* variables
+
+```{r}
+data$Pclass <- factor(data$Pclass)
+data$dataset <- factor(data$dataset)
+data$Survived<- factor(data$Survived)
+```
+
+#### Check for duplicates
+```{r}
+IDdups <- distinct(data, PassengerId)
+dim(IDdups)
+Namedups <- distinct(data, Name)
+dim(Namedups)
+```
+Since there are only 1307 distinct names in the dataset, there may be 2 duplicates. However there are 1309 distinct Passenger ID's
+
+
+```{r eval=FALSE}
+filter(data, duplicated(Name)) 
+```
+
+```{r}
+filter(data, grepl('Kelly|Connolly', Name, Age ))
+```
+The different age and ticket numbers of the potential duplicates indicate these are different with the same name not duplicates. 

@@ -1,0 +1,32 @@
+#### *Hypothesis 3:* Data visualization suggests traveling alone decreased your odds of survival but also suggests families >=4 had decreased survival odds ##
+#### Create 2 new categorical features *notalone* and *familysize*
+
+```{r results='hide'}
+data<- data %>% 
+  mutate (familysize = SibSp  + Parch +1 ) %>%
+  mutate(notalone = familysize >1) 
+  
+data$notalone<- factor(data$notalone)
+  glimpse (data)
+```
+
+#### Visualize survival as a function of notalone and familysize
+```{r results='hide'}
+trainset<-data%>% arrange(dataset)%>%slice(419:1309)
+head (trainset)
+glimpse(trainset)
+```
+
+
+```{r}
+hist_notalone <- ggplot(trainset, aes(x=notalone, fill=Survived))
+  hist_notalone + geom_bar() # defaults to stacking
+  hist_notalone + geom_bar(position= "fill") #proportions
+```  
+
+
+```{r}
+hist_familysize <- ggplot(trainset, aes(x=familysize, fill=Survived))
+  hist_familysize + geom_bar() # defaults to stacking
+  hist_familysize + geom_bar(position= "fill") #proportions  
+```

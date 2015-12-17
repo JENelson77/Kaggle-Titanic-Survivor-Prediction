@@ -1,0 +1,56 @@
+### CONCLUSIONS
+Participating in the Kaggle Titanic Competion was very rewarding and quite easy, in part because of all the resources that Kaggle provides, including datasets, scripts, notebooks, the discussion forum and for this competition several tutorials for both python and R. R is excellent open source software for data manipulation, visualization and machine learning analytics and R Studio is a very efficient and powerful platform for running R. In particular the R Markdown reporting tool, used for this report, is an excellent and efficient means of creating reports with embeded code and graphics. The relatively new *dplyr* R package for data manipulation was an improvement for this task over standard R scripting, however did not work as expected in several instances. The results of the predicitve modeling were very similar with all three methods, although the two methods which create decision trees to determine classification, recursive partitioning and random forests, were 2-3% more accurate than logistic regression. The best model was created using random forests and incorporated the features *Sex+Pclass+smallfamily+notalone+Child+Age+Fare*. This model scored 0.80383 placing 911/3942. The majority of the time involved in this project was spent preparing the data for analysis. In summary, R is a great tool for machine learning predicitve analytics. The results presented here suggest that it is most important to carefully prepare the data, including engineering additional features, and the three methods used in this study performed similarly although the random forest approach was best.        
+
+
+
+### Titanic project Resources  
+#### Kaggle Titanic homepage and  tutorials  
+[www.kaggle.com/c/titanic](www.kaggle.com/c/titanic)  
+[www.datacamp.com/courses/kaggle-tutorial-on-machine-learing-the-sinking-of-the-titanic](www.datacamp.com/courses/kaggle-tutorial-on-machine-learing-the-sinking-of-the-titanic)  
+[www.youtube.com/watch?v=32o0DnuRjfg](www.youtube.com/watch?v=32o0DnuRjfg)  
+[www.youtube.com/watch?v=u6sahb7Hmog](www.youtube.com/watch?v=u6sahb7Hmog)  
+[rstudio-pubs-static.s3.amazonaws.com/98715_fcd035c75a9b431a84efca8b091a185f.html](rstudio-pubs-static.s3.amazonaws.com/98715_fcd035c75a9b431a84efca8b091a185f.html)    
+
+#### dplyr resources  
+[www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf](www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)  
+[www.youtube.com/watch?v=jWjqLW-u3hc&feature=youtu.be](www.youtube.com/watch?v=jWjqLW-u3hc&feature=youtu.be)  
+[www.youtube.com/watch?v=2mh1PqfsXVI](www.youtube.com/watch?v=2mh1PqfsXVI)  
+[groups.google.com/forum/#!topic/manipulatr/Z46zwYXNh0g](groups.google.com/forum/#!topic/manipulatr/Z46zwYXNh0g)  
+[stackoverflow.com/questions/22850026/filtering-row-which-contains-a-certain-string-using-dplyr](stackoverflow.com/questions/22850026/filtering-row-which-contains-a-certain-string-using-dplyr)  
+[stackoverflow.com/questions/13520515/command-to-remove-row-from-a-data-frame](stackoverflow.com/questions/13520515/command-to-remove-row-from-a-data-frame)    
+
+#### Logistic regression resources  
+[cran.r-project.org/web/packages/glm2/glm2.pdf](cran.r-project.org/web/packages/glm2/glm2.pdf)  
+[www.kaggle.com/eyebervil/titanic/titanic-simple-logit-with-interaction](www.kaggle.com/eyebervil/titanic/titanic-simple-logit-with-interaction)  
+[cran.r-project.org/web/packages/caret/vignettes/caret.pdf](cran.r-project.org/web/packages/caret/vignettes/caret.pdf)  
+[cran.r-project.org/web/packages/caret/caret.pdf](cran.r-project.org/web/packages/caret/caret.pdf)  
+[cran.r-project.org/web/packages/pROC/pROC.pdf](cran.r-project.org/web/packages/pROC/pROC.pdf)  
+[stats.stackexchange.com/questions/87234/aic-values-and-their-use-in-stepwise-model-selection-for-a-simple-linear-regress](stats.stackexchange.com/questions/87234/aic-values-and-their-use-in-stepwise-model-selection-for-a-simple-linear-regress)    
+
+#### Recursive partitioning method resources  
+[cran.r-project.org/web/packages/rpart/rpart.pdf](cran.r-project.org/web/packages/rpart/rpart.pdf)  
+[cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf](cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf)  
+[campus.datacamp.com/courses/kaggle-r-tutorial-on-machine-learning/chapter-2-from-icebergs-to-trees?ex=1](campus.datacamp.com/courses/kaggle-r-tutorial-on-machine-learning/chapter-2-from-icebergs-to-trees?ex=1)  
+
+#### Random Forest method resources  
+[cran.r-project.org/web/packages/randomForest/randomForest.pdf](cran.r-project.org/web/packages/randomForest/randomForest.pdf)  
+[campus.datacamp.com/courses/kaggle-r-tutorial-on-machine-learning/chapter-3-improving-your-predictions-through-random-forests?ex=1](campus.datacamp.com/courses/kaggle-r-tutorial-on-machine-learning/chapter-3-improving-your-predictions-through-random-forests?ex=1)  
+
+Error message: *Error in randomForest.default(y = train$Survived, x = train[, c("Sex",  : 
+  Can't have empty classes in y.*    
+Solution: [stackoverflow.com/questions/13495041/random-forests-in-r-empty-classes-in-y-and-argument-legth-0](stackoverflow.com/questions/13495041/random-forests-in-r-empty-classes-in-y-and-argument-legth-0)  
+Error message: Error in predict.randomForest(rf2, newdata = test, type = "response") : 
+  No forest component in the object    
+[stat.ethz.ch/pipermail/r-help/2008-June/164878.html](stat.ethz.ch/pipermail/r-help/2008-June/164878.html)  
+
+Error Message: Error in predict.randomForest(rf2, newdata = test, type = "response") : 
+  Can't predict unsupervised forest.    
+Solution: [stackoverflow.com/questions/17217951/how-can-i-drop-unused-levels-from-a-data-frame](stackoverflow.com/questions/17217951/how-can-i-drop-unused-levels-from-a-data-frame)  
+
+#### R Markdown resources  
+[rmarkdown.rstudio.com/](rmarkdown.rstudio.com/)  
+[www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf](www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)  
+[www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf](www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)  
+
+Error message: Error: attempt to use zero-length variable name    
+Solution: [stackoverflow.com/questions/31296908/knitr-running-script-without-warnings](stackoverflow.com/questions/31296908/knitr-running-script-without-warnings)  

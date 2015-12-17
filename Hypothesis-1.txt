@@ -1,0 +1,20 @@
+#### *Hypothesis 1:* data visualization suggests being a child and/or a female increased your odds of survival
+
+#### Create feature *Child* from feature *Age* <= 16 yrs
+
+```{r}
+data <- data %>%
+  mutate(Child = Age <=16) 
+data$Child <- factor(data$Child)
+  glimpse (data)
+```
+
+
+#### Visualize survival as a function of Child
+```{r}
+trainset<-data%>% arrange(dataset)%>%slice(419:1309)
+
+hist_Child <- ggplot(trainset, aes(x=Child, fill=Survived))
+  hist_Child + geom_bar() # defaults to stacking
+  hist_Child + geom_bar(position= "fill") #proportions  
+```
